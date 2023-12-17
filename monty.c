@@ -1,32 +1,22 @@
-i#include "monty.h"
+#include "monty.h"
+int sq_flag = 0;
 /**
- * main - Entry point
- * @argc: number of arguments
- * @argv: arguments passed
- * Return: 0 - success, 1 failure
+ * main - driver function for monty program
+ * @argc: int num of arguments
+ * @argv: opcode file
+ * Return: 0
  */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-	FILE *fptr = NULL;
-	int exit_status = EXIT_SUCCESS;
+	stack_t *stack;
 
+	stack = NULL;
 	if (argc != 2)
 	{
-		perror("USAGE: monty file\n");
-		exit(EXIT_FAILURE);
+		printf("USAGE: monty file\n");
+		error_exit(&stack);
 	}
-	fptr = fopen(argv[1], "r");
-	if (fptr == NULL)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
-	exit_status = file_run(fptr);
-	fclose(fptr);
-	return (exit_status);
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	file_run(fptr);
-	exit(EXIT_SUCCESS);
+	read_file(argv[1], &stack);
+	free_dlistint(stack);
 	return (0);
 }
